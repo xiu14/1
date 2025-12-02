@@ -28,7 +28,7 @@ function pushLog(level, msg) {
 console.log = (...a) => pushLog('info', a.join(' '));
 console.error = (...a) => pushLog('error', a.join(' '));
 
-// 排除规则：保留核心数据，避免将缓存/归档/仓库历史打入备份
+// 排除规则
 const EXCLUDE_SEGMENTS_ALWAYS = new Set(['.git', 'node_modules']);
 const EXCLUDE_SEGMENTS_CACHE = new Set(['_cache','_uploads','_storage','_webpack','.cache','.parcel-cache','.vite','coverage']);
 const EXCLUDE_PREFIXES = ['default-user/backups'];
@@ -45,27 +45,34 @@ function shouldInclude(relPath) {
   return true;
 }
 
+// --- 核心修改：移除 WWW-Authenticate 头 ---
 function authGuard(req, res, next) {
   if (!USER && !PASS) return next();
   const creds = basicAuth(req);
   if (creds && creds.name === USER && creds.pass === PASS) return next();
-  res.set('WWW-Authenticate', 'Basic realm="st-backup"');
+  
+  // 关键修改：注释掉下面这行，禁止浏览器弹出原生登录框
+  // res.set('WWW-Authenticate', 'Basic realm="st-backup"');
+  
   return res.status(401).send('Unauthorized');
 }
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 
-// 静态页面（UI 不鉴权，避免浏览器弹出 Basic 框）
+// 静态页面（UI 不鉴权，优先服务）
 const PUBLIC_DIR = path.join(__dirname, 'public');
 app.use('/', express.static(PUBLIC_DIR));
+
+// 忽略 favicon 请求 (防止它触发 401 错误日志)
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // 接口鉴权
 app.use(authGuard);
 
 // 健康检查
 app.get('/health', async (req, res) => {
-  console.log('[health] ok');
+  // console.log('[health] ok'); // 减少日志刷屏
   res.json({ ok: true, dataDir: DATA_DIR, backupDir: BACKUP_DIR });
 });
 
@@ -126,17 +133,14 @@ app.get('/list', async (req, res) => {
   }
 });
 
-// --- 新增：下载备份文件 ---
+// 下载备份文件
 app.get('/download', async (req, res) => {
   const name = (req.query.name || '').toString();
   if (!name) return res.status(400).send('name required');
-  
-  // 安全检查：防止路径穿越，只允许下载文件名
   const safeName = path.basename(name); 
   const file = path.join(BACKUP_DIR, safeName);
-  
   try {
-    await fsp.access(file); // 检查文件是否存在
+    await fsp.access(file);
     console.log(`[download] start name=${safeName}`);
     res.download(file, safeName, (err) => {
       if (err) console.error(`[download] error name=${safeName}`, err);
