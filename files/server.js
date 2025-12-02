@@ -56,13 +56,11 @@ function authGuard(req, res, next) {
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 
-// 仅保留业务关键日志，去除 HTTP 访问日志
-
 // 静态页面（UI 不鉴权，避免浏览器弹出 Basic 框）
 const PUBLIC_DIR = path.join(__dirname, 'public');
 app.use('/', express.static(PUBLIC_DIR));
 
-// 接口鉴权（仅保护 API，由页面内输入账号密码发起请求）
+// 接口鉴权
 app.use(authGuard);
 
 // 健康检查
@@ -71,7 +69,7 @@ app.get('/health', async (req, res) => {
   res.json({ ok: true, dataDir: DATA_DIR, backupDir: BACKUP_DIR });
 });
 
-// 获取最近日志（默认 500 行）
+// 获取最近日志
 app.get('/logs', (req, res) => {
   const limit = Math.min(parseInt(req.query.limit || '500', 10), LOG_MAX);
   res.json({ lines: LOG_BUF.slice(-limit) });
@@ -128,6 +126,27 @@ app.get('/list', async (req, res) => {
   }
 });
 
+// --- 新增：下载备份文件 ---
+app.get('/download', async (req, res) => {
+  const name = (req.query.name || '').toString();
+  if (!name) return res.status(400).send('name required');
+  
+  // 安全检查：防止路径穿越，只允许下载文件名
+  const safeName = path.basename(name); 
+  const file = path.join(BACKUP_DIR, safeName);
+  
+  try {
+    await fsp.access(file); // 检查文件是否存在
+    console.log(`[download] start name=${safeName}`);
+    res.download(file, safeName, (err) => {
+      if (err) console.error(`[download] error name=${safeName}`, err);
+    });
+  } catch (e) {
+    console.error(`[download] not found name=${safeName}`);
+    res.status(404).send('File not found');
+  }
+});
+
 // 恢复（覆盖式）
 app.post('/restore', async (req, res) => {
   const name = (req.query.name || req.body?.name || '').toString();
@@ -160,8 +179,6 @@ app.delete('/delete', async (req, res) => {
   }
 });
 
-// 日志获取/清空
 app.listen(PORT, () => {
   console.log(`[st-remote-backup] listening on ${PORT}, DATA_DIR=${DATA_DIR}, BACKUP_DIR=${BACKUP_DIR}`);
 });
-
