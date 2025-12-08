@@ -10,6 +10,7 @@ const DATA_DIR = process.env.DATA_DIR || '/root/sillytavern/data';
 const BACKUP_DIR = process.env.BACKUP_DIR || '/opt/st-remote-backup/backups';
 const USER = process.env.BASIC_USER || '';
 const PASS = process.env.BASIC_PASS || '';
+const BACKUP_KEEP = parseInt(process.env.BACKUP_KEEP || '5', 10);
 
 async function ensureDir(dir) { await fsp.mkdir(dir, { recursive: true }).catch(()=>{}); }
 
@@ -116,8 +117,8 @@ app.post('/backup', async (req, res) => {
       backups.push({ p, mtime: s.mtime });
     }
     backups.sort((a, b) => b.mtime - a.mtime); // 按时间倒序
-    if (backups.length > 5) {
-      const toDelete = backups.slice(5);
+    if (backups.length > BACKUP_KEEP) {
+      const toDelete = backups.slice(BACKUP_KEEP);
       for (const item of toDelete) {
         await fsp.unlink(item.p);
         console.log(`[backup] auto-deleted old backup: ${path.basename(item.p)}`);
