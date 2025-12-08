@@ -105,6 +105,25 @@ app.post('/backup', async (req, res) => {
     }, ['.']);
     const st = await fsp.stat(out);
     console.log(`[backup] done name=${name} size=${(st.size/1048576).toFixed(2)}MB time=${Date.now()-t0}ms`);
+    
+    // 限制备份数量最多5份
+    const files = await fsp.readdir(BACKUP_DIR);
+    const backups = [];
+    for (const f of files) {
+      if (!f.endsWith('.tar.gz')) continue;
+      const p = path.join(BACKUP_DIR, f);
+      const s = await fsp.stat(p);
+      backups.push({ p, mtime: s.mtime });
+    }
+    backups.sort((a, b) => b.mtime - a.mtime); // 按时间倒序
+    if (backups.length > 5) {
+      const toDelete = backups.slice(5);
+      for (const item of toDelete) {
+        await fsp.unlink(item.p);
+        console.log(`[backup] auto-deleted old backup: ${path.basename(item.p)}`);
+      }
+    }
+
     res.json({ ok: true, file: name });
   } catch (e) {
     console.error('[backup] error:', e && e.stack || e);
