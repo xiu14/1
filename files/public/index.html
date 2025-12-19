@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -16,54 +19,110 @@
             background-size: 24px 24px;
             overflow-x: hidden;
         }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        
-        /* 炫光特效 */
-        .glow-effect { position: relative; overflow: hidden; }
-        .glow-effect::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(34, 211, 238, 0.1), transparent);
-            transform: rotate(45deg); animation: shimmer 3s infinite;
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
         }
-        @keyframes shimmer { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
+
+        /* 炫光特效 */
+        .glow-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(34, 211, 238, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .list-item-anim { animation: slideIn 0.4s ease-out forwards; opacity: 0; }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .list-item-anim {
+            animation: slideIn 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: rgba(34, 211, 238, 0.3); border-radius: 4px;
+            background-color: rgba(34, 211, 238, 0.3);
+            border-radius: 4px;
         }
     </style>
 </head>
+
 <body class="text-gray-200 min-h-screen flex flex-col items-center p-3 sm:p-6">
 
     <div class="w-full max-w-5xl mx-auto flex-1 flex flex-col">
         <!-- 登录界面 -->
         <div id="login-screen" class="my-auto">
-            <div class="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl p-6 sm:p-10 max-w-md mx-auto w-full relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"></div>
+            <div
+                class="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl p-6 sm:p-10 max-w-md mx-auto w-full relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500">
+                </div>
                 <div class="text-center mb-8">
                     <h1 class="font-orbitron text-3xl font-bold text-white tracking-wider mb-2">ACCESS</h1>
                     <p class="text-slate-400 text-xs uppercase tracking-widest">Secure Backup Gateway</p>
                 </div>
                 <div class="space-y-5">
                     <div>
-                        <input id="user" type="text" placeholder="USERNAME" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder-slate-600 text-sm font-medium">
+                        <input id="user" type="text" placeholder="USERNAME"
+                            class="w-full bg-slate-950/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder-slate-600 text-sm font-medium">
                     </div>
                     <div>
-                        <input id="pass" type="password" placeholder="PASSWORD" class="w-full bg-slate-950/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder-slate-600 text-sm font-medium">
+                        <input id="pass" type="password" placeholder="PASSWORD"
+                            class="w-full bg-slate-950/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all placeholder-slate-600 text-sm font-medium">
                     </div>
                 </div>
                 <div id="login-status" class="h-6 text-center text-red-400 text-xs mt-4 font-mono"></div>
-                <button id="connect-btn" class="w-full mt-6 bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3.5 rounded-lg transition-all active:scale-[0.98] shadow-lg shadow-cyan-900/20 flex justify-center items-center gap-2 group">
-                    <svg id="connect-loader" class="animate-spin h-4 w-4 hidden" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <button id="connect-btn"
+                    class="w-full mt-6 bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3.5 rounded-lg transition-all active:scale-[0.98] shadow-lg shadow-cyan-900/20 flex justify-center items-center gap-2 group">
+                    <svg id="connect-loader" class="animate-spin h-4 w-4 hidden" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+                            fill="none"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
                     <span id="connect-text">CONNECT SYSTEM</span>
-                    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -71,42 +130,66 @@
         <!-- 主控制台 -->
         <div id="console-screen" class="hidden w-full space-y-4">
             <!-- 头部状态栏 -->
-            <div class="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3 shadow-lg">
+            <div
+                class="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3 shadow-lg">
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                     <div>
-                        <h1 class="font-orbitron text-lg font-bold text-white tracking-wide leading-none">BACKUP CONSOLE</h1>
+                        <h1 class="font-orbitron text-lg font-bold text-white tracking-wide leading-none">BACKUP CONSOLE
+                        </h1>
                         <p class="text-[10px] text-slate-500 font-mono mt-1">SERVER: ONLINE</p>
                     </div>
                 </div>
-                <div id="status" class="px-3 py-1.5 bg-slate-950 rounded-md border border-slate-800 flex items-center gap-2">
-                    <svg id="loader" class="animate-spin h-3 w-3 text-cyan-400 hidden" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <div id="status"
+                    class="px-3 py-1.5 bg-slate-950 rounded-md border border-slate-800 flex items-center gap-2">
+                    <svg id="loader" class="animate-spin h-3 w-3 text-cyan-400 hidden" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+                            fill="none"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
                     <span id="status-text" class="text-xs font-mono text-slate-400">READY</span>
                 </div>
             </div>
 
             <!-- 操作按钮区 -->
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <button id="backup" class="col-span-2 sm:col-span-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white p-4 rounded-xl shadow-lg shadow-cyan-900/20 active:scale-[0.98] transition-all flex flex-col items-center justify-center gap-1 border border-white/10 group">
-                    <svg class="w-6 h-6 mb-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                <button id="backup"
+                    class="col-span-2 sm:col-span-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white p-4 rounded-xl shadow-lg shadow-cyan-900/20 active:scale-[0.98] transition-all flex flex-col items-center justify-center gap-1 border border-white/10 group">
+                    <svg class="w-6 h-6 mb-1 group-hover:-translate-y-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
                     <span class="font-bold text-sm">新建备份</span>
                     <span class="text-[10px] opacity-70">Create New Backup</span>
                 </button>
-                <button id="refresh" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 p-3 rounded-xl active:scale-[0.98] transition-all flex flex-col items-center justify-center gap-1">
-                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                <button id="refresh"
+                    class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 p-3 rounded-xl active:scale-[0.98] transition-all flex flex-col items-center justify-center gap-1">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+                    </svg>
                     <span class="text-xs font-medium">刷新列表</span>
                 </button>
-                <button id="health" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 p-3 rounded-xl active:scale-[0.98] transition-all flex flex-col items-center justify-center gap-1">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <button id="health"
+                    class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 p-3 rounded-xl active:scale-[0.98] transition-all flex flex-col items-center justify-center gap-1">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                     <span class="text-xs font-medium">服务状态</span>
                 </button>
             </div>
 
             <!-- 列表区域 (核心修改：针对手机优化布局) -->
-            <div id="list-container" class="bg-slate-900/60 backdrop-blur-sm border border-slate-800 rounded-xl overflow-hidden flex flex-col">
+            <div id="list-container"
+                class="bg-slate-900/60 backdrop-blur-sm border border-slate-800 rounded-xl overflow-hidden flex flex-col">
                 <div class="px-4 py-3 border-b border-slate-800 bg-slate-900/80 flex justify-between items-center">
                     <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Archives</h3>
-                    <span id="file-count" class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">0 FILES</span>
+                    <span id="file-count" class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">0
+                        FILES</span>
                 </div>
                 <div id="list" class="p-3 space-y-3 custom-scrollbar overflow-y-auto max-h-[50vh] min-h-[200px]">
                     <!-- JS动态填充内容 -->
@@ -122,133 +205,146 @@
                         <button id="log-clear" class="text-[10px] text-red-500 hover:text-red-400">CLEAR</button>
                     </div>
                 </div>
-                <pre id="log-box" class="h-24 overflow-y-auto text-[10px] font-mono text-slate-400 whitespace-pre-wrap break-all custom-scrollbar bg-black/20 p-2 rounded-lg"></pre>
+                <pre id="log-box"
+                    class="h-24 overflow-y-auto text-[10px] font-mono text-slate-400 whitespace-pre-wrap break-all custom-scrollbar bg-black/20 p-2 rounded-lg"></pre>
             </div>
         </div>
     </div>
 
     <!-- 确认弹窗 -->
-    <div id="custom-confirm" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
-        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-sm p-6 transform transition-all scale-95 duration-300">
+    <div id="custom-confirm"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
+        <div
+            class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-sm p-6 transform transition-all scale-95 duration-300">
             <div id="confirm-icon" class="mx-auto mb-4 flex justify-center"></div>
             <h3 id="confirm-title" class="text-lg font-bold text-white text-center mb-2">Confirm</h3>
             <p id="confirm-message" class="text-sm text-slate-400 text-center mb-6 leading-relaxed"></p>
             <div class="grid grid-cols-2 gap-3">
-                <button id="confirm-cancel" class="py-2.5 rounded-lg border border-slate-600 text-slate-300 text-sm font-medium hover:bg-slate-800 transition">取消</button>
-                <button id="confirm-ok" class="py-2.5 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-500 shadow-lg shadow-red-900/30 transition">确认</button>
+                <button id="confirm-cancel"
+                    class="py-2.5 rounded-lg border border-slate-600 text-slate-300 text-sm font-medium hover:bg-slate-800 transition">取消</button>
+                <button id="confirm-ok"
+                    class="py-2.5 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-500 shadow-lg shadow-red-900/30 transition">确认</button>
             </div>
         </div>
     </div>
 
     <script>
-    (() => {
-        const $ = s => document.querySelector(s);
-        
-        // 状态变量
-        let logAuto = true;
-        let logTimer = null;
+        (() => {
+            const $ = s => document.querySelector(s);
 
-        // UI 引用
-        const els = {
-            loginScreen: $('#login-screen'),
-            consoleScreen: $('#console-screen'),
-            user: $('#user'),
-            pass: $('#pass'),
-            connectBtn: $('#connect-btn'),
-            loginStatus: $('#login-status'),
-            list: $('#list'),
-            logBox: $('#log-box'),
-            statusText: $('#status-text'),
-            loader: $('#loader'),
-            countBadge: $('#file-count'),
-            confirmModal: $('#custom-confirm')
-        };
+            // 状态变量
+            let logAuto = true;
+            let logTimer = null;
 
-        // 基础函数
-        const auth = () => 'Basic ' + btoa(els.user.value + ':' + els.pass.value);
-        const saveCfg = () => localStorage.setItem('rb-ui-auth', JSON.stringify({ u: els.user.value, p: els.pass.value }));
-        const loadCfg = () => {
-            try {
-                const c = JSON.parse(localStorage.getItem('rb-ui-auth') || '{}');
-                if (c.u) els.user.value = c.u;
-                if (c.p) els.pass.value = c.p;
-            } catch {}
-        };
+            // UI 引用
+            const els = {
+                loginScreen: $('#login-screen'),
+                consoleScreen: $('#console-screen'),
+                user: $('#user'),
+                pass: $('#pass'),
+                connectBtn: $('#connect-btn'),
+                loginStatus: $('#login-status'),
+                list: $('#list'),
+                logBox: $('#log-box'),
+                statusText: $('#status-text'),
+                loader: $('#loader'),
+                countBadge: $('#file-count'),
+                confirmModal: $('#custom-confirm')
+            };
 
-        // API 封装
-        async function api(method, path) {
-            try {
-                const res = await fetch(path, { method, headers: { 'Authorization': auth() }});
-                if (res.status === 401) return { ok: false, error: '密码错误' };
-                return await res.json();
-            } catch (e) {
-                return { ok: false, raw: '网络错误' };
-            }
-        }
+            // 基础函数
+            const auth = () => 'Basic ' + btoa(els.user.value + ':' + els.pass.value);
+            const saveCfg = () => localStorage.setItem('rb-ui-auth', JSON.stringify({ u: els.user.value, p: els.pass.value }));
+            const loadCfg = () => {
+                try {
+                    const c = JSON.parse(localStorage.getItem('rb-ui-auth') || '{}');
+                    if (c.u) els.user.value = c.u;
+                    if (c.p) els.pass.value = c.p;
+                } catch { }
+            };
 
-        // 状态更新
-        function setStatus(msg, type='idle') {
-            els.statusText.textContent = msg;
-            els.loader.classList.toggle('hidden', type !== 'loading');
-            els.statusText.className = `text-xs font-mono ${type==='error'?'text-red-400':type==='success'?'text-green-400':'text-slate-400'}`;
-        }
-
-        // 核心功能：连接
-        async function connect() {
-            if (!els.user.value || !els.pass.value) return els.loginStatus.textContent = "请输入账号密码";
-            els.loginStatus.textContent = "";
-            $('#connect-text').textContent = "VERIFYING...";
-            $('#connect-loader').classList.remove('hidden');
-            
-            const r = await api('GET', '/health');
-            
-            if (r.ok) {
-                saveCfg();
-                els.loginScreen.classList.add('hidden');
-                els.consoleScreen.classList.remove('hidden');
-                refresh();
-                startLogs();
-            } else {
-                els.loginStatus.textContent = r.error || "连接失败";
-                $('#connect-text').textContent = "CONNECT SYSTEM";
-                $('#connect-loader').classList.add('hidden');
-            }
-        }
-
-        // 核心功能：刷新列表 (包含新的渲染逻辑)
-        async function refresh() {
-            setStatus('LOADING...', 'loading');
-            els.list.innerHTML = '';
-            const r = await api('GET', '/list');
-            
-            if (!r.ok) {
-                setStatus('ERROR', 'error');
-                els.list.innerHTML = `<div class="text-center text-slate-500 py-8 text-sm">获取列表失败</div>`;
-                return;
+            // API 封装
+            async function api(method, path) {
+                try {
+                    const res = await fetch(path, { method, headers: { 'Authorization': auth() } });
+                    if (res.status === 401) return { ok: false, error: '密码错误' };
+                    return await res.json();
+                } catch (e) {
+                    return { ok: false, raw: '网络错误' };
+                }
             }
 
-            setStatus('READY', 'success');
-            els.countBadge.textContent = `${r.items.length} FILES`;
-            
-            if (r.items.length === 0) {
-                els.list.innerHTML = `<div class="text-center text-slate-500 py-10 text-sm border-2 border-dashed border-slate-800 rounded-xl">暂无备份文件</div>`;
-                return;
+            // 状态更新
+            function setStatus(msg, type = 'idle') {
+                els.statusText.textContent = msg;
+                els.loader.classList.toggle('hidden', type !== 'loading');
+                els.statusText.className = `text-xs font-mono ${type === 'error' ? 'text-red-400' : type === 'success' ? 'text-green-400' : 'text-slate-400'}`;
             }
 
-            r.items.forEach((it, idx) => {
-                const dateStr = it.name.match(/(\d{4}-\d{2}-\d{2}).(\d{2}-\d{2}-\d{2})/) || [];
-                const displayTime = dateStr.length ? `${dateStr[1]} ${dateStr[2].replace(/-/g,':')}` : 'Unknown Date';
-                const sizeMB = (it.size / 1024 / 1024).toFixed(2);
+            // 核心功能：连接
+            async function connect() {
+                if (!els.user.value || !els.pass.value) return els.loginStatus.textContent = "请输入账号密码";
+                els.loginStatus.textContent = "";
+                $('#connect-text').textContent = "VERIFYING...";
+                $('#connect-loader').classList.remove('hidden');
 
-                const el = document.createElement('div');
-                el.className = 'list-item-anim bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 hover:border-cyan-500/30 transition-colors group';
-                el.style.animationDelay = `${idx * 50}ms`;
-                
-                // 手机端优化布局：
-                // 1. 顶部：图标 + 文件名 (允许换行，不截断)
-                // 2. 中部：元数据 (大小、时间)
-                // 3. 底部：操作按钮栏 (均分宽度，易于点击)
-                el.innerHTML = `
+                const r = await api('GET', '/health');
+
+                if (r.ok) {
+                    saveCfg();
+                    els.loginScreen.classList.add('hidden');
+                    els.consoleScreen.classList.remove('hidden');
+                    refresh();
+                    startLogs();
+                } else {
+                    els.loginStatus.textContent = r.error || "连接失败";
+                    $('#connect-text').textContent = "CONNECT SYSTEM";
+                    $('#connect-loader').classList.add('hidden');
+                }
+            }
+
+            // 核心功能：刷新列表 (包含新的渲染逻辑)
+            async function refresh() {
+                setStatus('LOADING...', 'loading');
+                els.list.innerHTML = '';
+                const r = await api('GET', '/list');
+
+                if (!r.ok) {
+                    setStatus('ERROR', 'error');
+                    els.list.innerHTML = `<div class="text-center text-slate-500 py-8 text-sm">获取列表失败</div>`;
+                    return;
+                }
+
+                setStatus('READY', 'success');
+                els.countBadge.textContent = `${r.items.length} FILES`;
+
+                if (r.items.length === 0) {
+                    els.list.innerHTML = `<div class="text-center text-slate-500 py-10 text-sm border-2 border-dashed border-slate-800 rounded-xl">暂无备份文件</div>`;
+                    return;
+                }
+
+                r.items.forEach((it, idx) => {
+                    // Timezone Fix: Parse ISO string from filename
+                    // Filename format: st-data-YYYY-MM-DDTHH-mm-ss-sssZ.tar.gz
+                    let displayTime = 'Unknown Date';
+                    const m = it.name.match(/st-data-(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z/);
+                    if (m) {
+                        // Reconstruct ISO string: YYYY-MM-DDTHH:mm:ss.sssZ
+                        const iso = `${m[1]}T${m[2]}:${m[3]}:${m[4]}.${m[5]}Z`;
+                        displayTime = new Date(iso).toLocaleString('zh-CN', { hour12: false });
+                    } else {
+                        // Fallback for old format if any (trying generous match)
+                        const dateStr = it.name.match(/(\d{4}-\d{2}-\d{2}).(\d{2}-\d{2}-\d{2})/) || [];
+                        if (dateStr.length) displayTime = `${dateStr[1]} ${dateStr[2].replace(/-/g, ':')} (UTC)`;
+                    }
+
+                    const sizeMB = (it.size / 1024 / 1024).toFixed(2);
+
+                    const el = document.createElement('div');
+                    el.className = 'list-item-anim bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 hover:border-cyan-500/30 transition-colors group';
+                    el.style.animationDelay = `${idx * 50}ms`;
+
+                    el.innerHTML = `
                     <div class="flex flex-col gap-3">
                         <div class="flex items-start gap-3">
                             <div class="mt-0.5 p-2 bg-slate-900 rounded-lg text-cyan-500 shrink-0">
@@ -264,10 +360,10 @@
                         </div>
                         
                         <div class="grid grid-cols-3 gap-2 mt-1 pt-3 border-t border-slate-700/50">
-                            <a href="/download?name=${encodeURIComponent(it.name)}" target="_blank" class="flex items-center justify-center gap-1.5 py-2 rounded-lg bg-slate-700/30 hover:bg-slate-700 text-cyan-400 hover:text-cyan-300 text-xs font-medium transition-colors">
+                            <button class="btn-download flex items-center justify-center gap-1.5 py-2 rounded-lg bg-slate-700/30 hover:bg-slate-700 text-cyan-400 hover:text-cyan-300 text-xs font-medium transition-colors">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                 下载
-                            </a>
+                            </button>
                             <button class="btn-restore flex items-center justify-center gap-1.5 py-2 rounded-lg bg-slate-700/30 hover:bg-yellow-900/20 text-yellow-500 hover:text-yellow-400 text-xs font-medium transition-colors">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                                 恢复
@@ -280,82 +376,117 @@
                     </div>
                 `;
 
-                el.querySelector('.btn-restore').onclick = () => confirmAction('Restore Data', `确定要用 <b>${it.name}</b> 覆盖当前数据吗？<br><span class="text-xs text-yellow-500 mt-2 block">警告：当前未备份的新进度将会丢失。</span>`, async () => {
-                    setStatus('RESTORING...', 'loading');
-                    const res = await api('POST', `/restore?name=${encodeURIComponent(it.name)}`);
-                    setStatus(res.ok ? 'SUCCESS' : 'FAIL', res.ok ? 'success' : 'error');
-                }, 'restore');
+                    // Bind Download
+                    el.querySelector('.btn-download').onclick = function () {
+                        downloadFile(it.name, this);
+                    };
 
-                el.querySelector('.btn-delete').onclick = () => confirmAction('Delete Backup', `确定要永久删除 <b>${it.name}</b> 吗？`, async () => {
-                    setStatus('DELETING...', 'loading');
-                    const res = await api('DELETE', `/delete?name=${encodeURIComponent(it.name)}`);
-                    if (res.ok) refresh();
-                    else setStatus('FAIL', 'error');
-                }, 'delete');
+                    el.querySelector('.btn-restore').onclick = () => confirmAction('Restore Data', `确定要用 <b>${it.name}</b> 覆盖当前数据吗？<br><span class="text-xs text-yellow-500 mt-2 block">警告：当前未备份的新进度将会丢失。</span>`, async () => {
+                        setStatus('RESTORING...', 'loading');
+                        const res = await api('POST', `/restore?name=${encodeURIComponent(it.name)}`);
+                        setStatus(res.ok ? 'SUCCESS' : 'FAIL', res.ok ? 'success' : 'error');
+                    }, 'restore');
 
-                els.list.appendChild(el);
-            });
-        }
+                    el.querySelector('.btn-delete').onclick = () => confirmAction('Delete Backup', `确定要永久删除 <b>${it.name}</b> 吗？`, async () => {
+                        setStatus('DELETING...', 'loading');
+                        const res = await api('DELETE', `/delete?name=${encodeURIComponent(it.name)}`);
+                        if (res.ok) refresh();
+                        else setStatus('FAIL', 'error');
+                    }, 'delete');
 
-        // 弹窗逻辑
-        function confirmAction(title, msg, callback, type) {
-            $('#confirm-title').textContent = title;
-            $('#confirm-message').innerHTML = msg;
-            $('#confirm-icon').innerHTML = type === 'delete' 
-                ? `<div class="p-3 bg-red-900/30 rounded-full text-red-500"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg></div>`
-                : `<div class="p-3 bg-yellow-900/30 rounded-full text-yellow-500"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>`;
-            
-            const btn = $('#confirm-ok');
-            btn.className = `py-2.5 rounded-lg text-white text-sm font-bold shadow-lg transition ${type === 'delete' ? 'bg-red-600 hover:bg-red-500 shadow-red-900/30' : 'bg-yellow-600 hover:bg-yellow-500 shadow-yellow-900/30'}`;
-            btn.textContent = type === 'delete' ? '确认删除' : '确认恢复';
-            
-            btn.onclick = () => {
-                callback();
-                closeConfirm();
-            };
-            
-            els.confirmModal.classList.remove('hidden');
-            setTimeout(() => els.confirmModal.classList.remove('opacity-0'), 10);
-        }
+                    els.list.appendChild(el);
+                });
+            }
 
-        function closeConfirm() {
-            els.confirmModal.classList.add('opacity-0');
-            setTimeout(() => els.confirmModal.classList.add('hidden'), 300);
-        }
+            // 下载逻辑 (修复 401 Unauthorized)
+            async function downloadFile(name, btn) {
+                const originalInnerHTML = btn.innerHTML;
+                btn.innerHTML = `<svg class="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 下载中`;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
 
-        // 日志逻辑
-        async function startLogs() {
-            if (logTimer) clearInterval(logTimer);
-            logTimer = setInterval(async () => {
-                if (!logAuto) return;
                 try {
-                    const r = await fetch('/logs?limit=200', { headers: { 'Authorization': auth() }});
-                    if (r.status === 401) return;
-                    const d = await r.json();
-                    if (d.lines) els.logBox.textContent = d.lines.join('\n');
-                } catch {}
-            }, 3000);
-        }
+                    const res = await fetch(`/download?name=${encodeURIComponent(name)}`, {
+                        headers: { 'Authorization': auth() }
+                    });
 
-        // 事件绑定
-        els.connectBtn.onclick = connect;
-        $('#confirm-cancel').onclick = closeConfirm;
-        $('#backup').onclick = async () => {
-            setStatus('BACKING UP...', 'loading');
-            const r = await api('POST', '/backup');
-            if (r.ok) { setStatus('DONE', 'success'); refresh(); }
-            else setStatus('FAIL', 'error');
-        };
-        $('#refresh').onclick = refresh;
-        $('#health').onclick = () => { setStatus('CHECKING...', 'loading'); api('GET', '/health').then(r => setStatus(r.ok?'ONLINE':'OFFLINE', r.ok?'success':'error')); };
-        $('#log-toggle').onclick = function() { logAuto = !logAuto; this.textContent = `AUTO: ${logAuto?'ON':'OFF'}`; this.className = logAuto ? 'text-[10px] text-cyan-500' : 'text-[10px] text-slate-500'; };
-        $('#log-clear').onclick = () => { api('DELETE', '/logs'); els.logBox.textContent = ''; };
-        
-        loadCfg();
+                    if (res.status === 401) throw new Error('Auth Error');
+                    if (!res.ok) throw new Error('Download Error');
 
-    })();
+                    const blob = await res.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = name;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                } catch (e) {
+                    alert('下载失败: ' + e.message);
+                } finally {
+                    btn.innerHTML = originalInnerHTML;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                }
+            }
+
+            // 弹窗逻辑
+            function confirmAction(title, msg, callback, type) {
+                $('#confirm-title').textContent = title;
+                $('#confirm-message').innerHTML = msg;
+                $('#confirm-icon').innerHTML = type === 'delete'
+                    ? `<div class="p-3 bg-red-900/30 rounded-full text-red-500"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg></div>`
+                    : `<div class="p-3 bg-yellow-900/30 rounded-full text-yellow-500"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>`;
+
+                const btn = $('#confirm-ok');
+                btn.className = `py-2.5 rounded-lg text-white text-sm font-bold shadow-lg transition ${type === 'delete' ? 'bg-red-600 hover:bg-red-500 shadow-red-900/30' : 'bg-yellow-600 hover:bg-yellow-500 shadow-yellow-900/30'}`;
+                btn.textContent = type === 'delete' ? '确认删除' : '确认恢复';
+
+                btn.onclick = () => {
+                    callback();
+                    closeConfirm();
+                };
+
+                els.confirmModal.classList.remove('hidden');
+                setTimeout(() => els.confirmModal.classList.remove('opacity-0'), 10);
+            }
+
+            function closeConfirm() {
+                els.confirmModal.classList.add('opacity-0');
+                setTimeout(() => els.confirmModal.classList.add('hidden'), 300);
+            }
+
+            // 日志逻辑
+            async function startLogs() {
+                if (logTimer) clearInterval(logTimer);
+                logTimer = setInterval(async () => {
+                    if (!logAuto) return;
+                    try {
+                        const r = await fetch('/logs?limit=200', { headers: { 'Authorization': auth() } });
+                        if (r.status === 401) return;
+                        const d = await r.json();
+                        if (d.lines) els.logBox.textContent = d.lines.join('\n');
+                    } catch { }
+                }, 3000);
+            }
+
+            // 事件绑定
+            els.connectBtn.onclick = connect;
+            $('#confirm-cancel').onclick = closeConfirm;
+            $('#backup').onclick = async () => {
+                setStatus('BACKING UP...', 'loading');
+                const r = await api('POST', '/backup');
+                if (r.ok) { setStatus('DONE', 'success'); refresh(); }
+                else setStatus('FAIL', 'error');
+            };
+            $('#refresh').onclick = refresh;
+            $('#health').onclick = () => { setStatus('CHECKING...', 'loading'); api('GET', '/health').then(r => setStatus(r.ok ? 'ONLINE' : 'OFFLINE', r.ok ? 'success' : 'error')); };
+            $('#log-toggle').onclick = function () { logAuto = !logAuto; this.textContent = `AUTO: ${logAuto ? 'ON' : 'OFF'}`; this.className = logAuto ? 'text-[10px] text-cyan-500' : 'text-[10px] text-slate-500'; };
+            $('#log-clear').onclick = () => { api('DELETE', '/logs'); els.logBox.textContent = ''; };
+
+            loadCfg();
+
+        })();
     </script>
 </body>
+
 </html>
-
-
