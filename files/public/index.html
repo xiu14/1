@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Stellar Backup Gateway</title>
+    <title>星际备份中枢</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <style>
         /* --- Base & Background --- */
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Noto Sans SC', sans-serif;
             background-color: #030508;
             background-image:
                 radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15) 0%, transparent 40%),
@@ -182,22 +182,23 @@
                         </path>
                     </svg>
                 </div>
-                <h1 class="font-tech text-3xl font-bold tracking-widest text-white">GATEWAY</h1>
+                <h1 class="font-bold text-3xl tracking-widest text-white">系统入口</h1>
                 <p class="text-xs text-slate-400 font-tech mt-2 tracking-[0.2em] opacity-80">SECURE ACCESS LEVEL 1</p>
             </div>
 
             <div class="space-y-4 relative z-10">
                 <div class="group/input">
                     <label
-                        class="block text-[10px] font-tech text-cyan-400 mb-1 ml-1 opacity-0 group-hover/input:opacity-100 transition-opacity">IDENTIFIER</label>
-                    <input id="user" type="text" placeholder="USERNAME"
+                        class="block text-[10px] font-bold text-cyan-400 mb-1 ml-1 opacity-0 group-hover/input:opacity-100 transition-opacity">识别码
+                        (ID)</label>
+                    <input id="user" type="text" placeholder="用户名"
                         class="glass-input w-full rounded-xl px-4 py-3.5 text-sm placeholder-slate-600 focus:placeholder-cyan-900/0">
                 </div>
                 <div class="group/input">
                     <label
-                        class="block text-[10px] font-tech text-cyan-400 mb-1 ml-1 opacity-0 group-hover/input:opacity-100 transition-opacity">ACCESS
-                        CODE</label>
-                    <input id="pass" type="password" placeholder="PASSWORD"
+                        class="block text-[10px] font-bold text-cyan-400 mb-1 ml-1 opacity-0 group-hover/input:opacity-100 transition-opacity">访问密钥
+                        (KEY)</label>
+                    <input id="pass" type="password" placeholder="密码"
                         class="glass-input w-full rounded-xl px-4 py-3.5 text-sm placeholder-slate-600 focus:placeholder-cyan-900/0">
                 </div>
             </div>
@@ -207,7 +208,7 @@
             <button id="connect-btn"
                 class="btn-hover-effect w-full mt-6 bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-900/30 flex justify-center items-center gap-3 group/btn">
                 <div id="connect-loader" class="hidden loader-ring text-white w-4 h-4 border-2"></div>
-                <span id="connect-text" class="font-tech tracking-wider">INITIALIZE LINK</span>
+                <span id="connect-text" class="tracking-wider">建立连接</span>
                 <svg class="w-4 h-4 text-cyan-200 transition-transform group-hover/btn:translate-x-1" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
@@ -228,16 +229,16 @@
                     <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></div>
                 </div>
                 <div>
-                    <h2 class="font-tech text-xl font-bold text-white tracking-widest leading-none">SYSTEM CONTROL</h2>
+                    <h2 class="text-xl font-bold text-white tracking-wide leading-none">星际备份中枢</h2>
                     <p class="text-[10px] text-slate-400 font-mono mt-0.5">NODE: <span
-                            class="text-cyan-400">ACTIVE</span></p>
+                            class="text-cyan-400">ONLINE</span></p>
                 </div>
             </div>
 
             <div id="status-badge"
                 class="px-4 py-1.5 rounded-full border border-slate-700 bg-slate-900/50 flex items-center gap-2 transition-colors">
                 <div id="loader" class="loader-ring text-cyan-400 w-3 h-3 border-[1.5px] hidden"></div>
-                <span id="status-text" class="text-xs font-mono text-slate-400">IDLE</span>
+                <span id="status-text" class="text-xs font-mono text-slate-400">READY</span>
             </div>
         </header>
 
@@ -248,7 +249,7 @@
             <div class="lg:col-span-1 flex flex-col gap-4 overflow-y-auto pb-safe">
                 <!-- Action Card -->
                 <div class="glass-panel p-5 rounded-2xl space-y-3">
-                    <h3 class="text-xs font-tech text-slate-500 uppercase tracking-widest mb-4">Operations</h3>
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">操作指令</h3>
 
                     <button id="backup"
                         class="btn-hover-effect w-full bg-slate-800 hover:bg-gradient-to-r hover:from-cyan-900/50 hover:to-blue-900/50 border border-slate-700 hover:border-cyan-500/50 p-4 rounded-xl flex items-center gap-4 group">
@@ -261,7 +262,7 @@
                             </svg>
                         </div>
                         <div class="text-left">
-                            <div class="text-sm font-bold text-slate-200">New Backup</div>
+                            <div class="text-sm font-bold text-slate-200">新建备份</div>
                             <div class="text-[10px] text-slate-500 font-tech">CREATE SNAPSHOT</div>
                         </div>
                     </button>
@@ -274,7 +275,7 @@
                                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
                                 </path>
                             </svg>
-                            <span class="text-[10px] font-tech">REFRESH</span>
+                            <span class="text-[10px] font-bold">列表刷新</span>
                         </button>
                         <button id="health"
                             class="btn-hover-effect p-3 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-green-400 flex flex-col items-center gap-1">
@@ -282,7 +283,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span class="text-[10px] font-tech mb-0.5">STATUS</span>
+                            <span class="text-[10px] font-bold mb-0.5">系统状态</span>
                         </button>
                     </div>
                 </div>
@@ -290,12 +291,12 @@
                 <!-- Logger Console -->
                 <div class="glass-panel rounded-2xl flex-1 flex flex-col overflow-hidden min-h-[200px]">
                     <div class="px-4 py-3 border-b border-white/5 bg-black/20 flex justify-between items-center">
-                        <span class="text-[10px] font-tech text-slate-500">SYSTEM LOGS</span>
+                        <span class="text-[10px] font-bold text-slate-500">运行日志</span>
                         <div class="flex gap-2">
                             <button id="log-toggle"
-                                class="text-[10px] text-cyan-500/80 hover:text-cyan-400 font-mono transition">LIVE</button>
+                                class="text-[10px] text-cyan-500/80 hover:text-cyan-400 font-mono transition">实时</button>
                             <button id="log-clear"
-                                class="text-[10px] text-slate-600 hover:text-red-400 font-mono transition">CLR</button>
+                                class="text-[10px] text-slate-600 hover:text-red-400 font-mono transition">清空</button>
                         </div>
                     </div>
                     <div class="flex-1 bg-black/40 p-3 overflow-hidden relative">
@@ -311,12 +312,12 @@
                 <div
                     class="px-6 py-4 border-b border-white/5 bg-white/5 flex justify-between items-end backdrop-blur-md sticky top-0 z-10">
                     <div>
-                        <h3 class="font-tech text-lg font-bold text-white tracking-wide">ARCHIVE DEPOSITORY</h3>
-                        <p class="text-[10px] text-slate-400">LOCAL STORAGE / VOLUME 1</p>
+                        <h3 class="text-lg font-bold text-white tracking-wide">归档数据库</h3>
+                        <p class="text-[10px] text-slate-400 font-tech">LOCAL STORAGE / VOLUME 1</p>
                     </div>
                     <span id="file-count"
                         class="text-xs font-mono font-bold text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded border border-amber-500/20">0
-                        ITEMS</span>
+                        FILES</span>
                 </div>
 
                 <div id="list-container" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 relative">
@@ -328,7 +329,7 @@
                                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
                             </path>
                         </svg>
-                        <span class="font-tech text-sm tracking-widest opacity-50">NO ARCHIVES FOUND</span>
+                        <span class="font-bold text-sm tracking-widest opacity-50">暂无归档数据</span>
                     </div>
                     <div id="list" class="space-y-3 pb-safe"></div>
                 </div>
@@ -344,12 +345,11 @@
             <div class="p-6 text-center">
                 <div id="confirm-icon-container"
                     class="mb-4 mx-auto w-16 h-16 rounded-full flex items-center justify-center"></div>
-                <h3 id="confirm-title" class="text-xl font-bold font-tech tracking-wide text-white mb-2"></h3>
+                <h3 id="confirm-title" class="text-xl font-bold tracking-wide text-white mb-2"></h3>
                 <div id="confirm-message" class="text-sm text-slate-300 leading-relaxed opacity-90"></div>
             </div>
             <div class="grid grid-cols-2 text-sm font-medium border-t border-white/10 divide-x divide-white/10">
-                <button id="confirm-cancel"
-                    class="py-4 hover:bg-white/5 text-slate-400 transition-colors">CANCEL</button>
+                <button id="confirm-cancel" class="py-4 hover:bg-white/5 text-slate-400 transition-colors">取消</button>
                 <button id="confirm-ok" class="py-4 text-white transition-colors"></button>
             </div>
         </div>
@@ -410,9 +410,9 @@
             async function api(method, path) {
                 try {
                     const res = await fetch(path, { method, headers: { 'Authorization': auth() } });
-                    if (res.status === 401) return { ok: false, error: 'Unauthorized Access' };
+                    if (res.status === 401) return { ok: false, error: '权限验证失败' };
                     return await res.json();
-                } catch (e) { return { ok: false, raw: 'Network Error' }; }
+                } catch (e) { return { ok: false, raw: '网络连接错误' }; }
             }
 
             // Status UI
@@ -438,9 +438,9 @@
 
             // Connection
             async function connect() {
-                if (!els.user.value || !els.pass.value) return els.loginStatus.textContent = "CREDENTIALS REQUIRED";
+                if (!els.user.value || !els.pass.value) return els.loginStatus.textContent = "请输入访问凭证";
                 els.loginStatus.textContent = "";
-                $('#connect-text').textContent = "AUTHENTICATING...";
+                $('#connect-text').textContent = "正在验证...";
                 $('#connect-loader').classList.remove('hidden');
 
                 const r = await api('GET', '/health');
@@ -456,30 +456,30 @@
                         startLogs();
                     }, 500);
                 } else {
-                    els.loginStatus.textContent = r.error || "CONNECTION FAILED";
-                    $('#connect-text').textContent = "INITIALIZE LINK";
+                    els.loginStatus.textContent = r.error || "连接因故失败";
+                    $('#connect-text').textContent = "建立连接";
                     $('#connect-loader').classList.add('hidden');
                 }
             }
 
             // File List & Parsing
             async function refresh() {
-                setStatus('SYNCING...', 'loading');
+                setStatus('数据同步中...', 'loading');
                 els.list.innerHTML = '';
                 const r = await api('GET', '/list');
 
                 if (!r.ok) {
-                    setStatus('SYNC ERROR', 'error');
+                    setStatus('同步失败', 'error');
                     return;
                 }
 
-                setStatus('SYSTEM READY', 'success');
-                els.countBadge.textContent = `${r.items.length} ITEMS`;
+                setStatus('系统就绪', 'success');
+                els.countBadge.textContent = `${r.items.length} 个文件`;
                 els.emptyState.classList.toggle('hidden', r.items.length > 0);
 
                 r.items.forEach((it, idx) => {
                     // --- Timezone Logic Preserved ---
-                    let displayTime = 'Unknown Date';
+                    let displayTime = '未知时间';
                     const m = it.name.match(/st-data-(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z/);
                     if (m) {
                         const iso = `${m[1]}T${m[2]}:${m[3]}:${m[4]}.${m[5]}Z`;
@@ -511,13 +511,13 @@
                         </div>
                         
                         <div class="flex items-center gap-2 border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0">
-                            <button class="btn-dl relative overflow-hidden p-2 rounded-lg bg-slate-800/50 hover:bg-cyan-600/20 text-slate-400 hover:text-cyan-400 transition-colors border border-transparent hover:border-cyan-500/30" title="Download">
+                            <button class="btn-dl relative overflow-hidden p-2 rounded-lg bg-slate-800/50 hover:bg-cyan-600/20 text-slate-400 hover:text-cyan-400 transition-colors border border-transparent hover:border-cyan-500/30" title="下载">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                             </button>
-                            <button class="btn-rst p-2 rounded-lg bg-slate-800/50 hover:bg-amber-600/20 text-slate-400 hover:text-amber-400 transition-colors border border-transparent hover:border-amber-500/30" title="Restore">
+                            <button class="btn-rst p-2 rounded-lg bg-slate-800/50 hover:bg-amber-600/20 text-slate-400 hover:text-amber-400 transition-colors border border-transparent hover:border-amber-500/30" title="恢复">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                             </button>
-                            <button class="btn-del p-2 rounded-lg bg-slate-800/50 hover:bg-red-600/20 text-slate-400 hover:text-red-400 transition-colors border border-transparent hover:border-red-500/30" title="Delete">
+                            <button class="btn-del p-2 rounded-lg bg-slate-800/50 hover:bg-red-600/20 text-slate-400 hover:text-red-400 transition-colors border border-transparent hover:border-red-500/30" title="删除">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
                         </div>
@@ -527,23 +527,23 @@
                     el.querySelector('.btn-dl').onclick = function () { downloadFile(it.name, this); };
 
                     el.querySelector('.btn-rst').onclick = () => confirmAction(
-                        'INITIATE RESTORE',
-                        `Overwrite current data with archive <br><b class="text-amber-400 font-mono text-xs">${it.name}</b>?<br><br><span class="text-amber-500/80 text-xs border border-amber-500/20 px-2 py-1 rounded bg-amber-500/5">WARNING: Unsaved progress will be lost.</span>`,
+                        '启动恢复程序',
+                        `是否确认使用归档 <br><b class="text-amber-400 font-mono text-xs">${it.name}</b><br>覆盖当前主数据？<br><br><span class="text-amber-500/80 text-xs border border-amber-500/20 px-2 py-1 rounded bg-amber-500/5">警告：自归档生成后产生的新进度将永久丢失。</span>`,
                         async () => {
-                            setStatus('RESTORING...', 'loading');
+                            setStatus('正在恢复...', 'loading');
                             const res = await api('POST', `/restore?name=${encodeURIComponent(it.name)}`);
-                            setStatus(res.ok ? 'RESTORE COMPLETE' : 'RESTORE FAILED', res.ok ? 'success' : 'error');
+                            setStatus(res.ok ? '恢复完成' : '恢复失败', res.ok ? 'success' : 'error');
                         },
                         'restore'
                     );
 
                     el.querySelector('.btn-del').onclick = () => confirmAction(
-                        'CONFIRM DELETION',
-                        `Permanently delete archive <br><b class="text-red-400 font-mono text-xs">${it.name}</b>?`,
+                        '确认删除操作',
+                        `永久移除归档文件 <br><b class="text-red-400 font-mono text-xs">${it.name}</b>？<br><br><span class="text-slate-500 text-xs">此操作不可逆转。</span>`,
                         async () => {
-                            setStatus('DELETING...', 'loading');
+                            setStatus('正在删除...', 'loading');
                             const res = await api('DELETE', `/delete?name=${encodeURIComponent(it.name)}`);
-                            if (res.ok) refresh(); else setStatus('DELETE FAILED', 'error');
+                            if (res.ok) refresh(); else setStatus('删除失败', 'error');
                         },
                         'delete'
                     );
@@ -570,7 +570,7 @@
                     document.body.appendChild(a); a.click();
                     window.URL.revokeObjectURL(url); a.remove();
                 } catch (e) {
-                    setStatus('DOWNLOAD ERROR', 'error');
+                    setStatus('下载失败', 'error');
                 } finally {
                     btn.innerHTML = originalContent;
                     btn.classList.remove('cursor-not-allowed', 'opacity-70');
@@ -589,12 +589,12 @@
                     iconContainer.className = "mb-4 mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-red-900/20 text-red-500 border border-red-500/30";
                     iconContainer.innerHTML = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`;
                     btn.className = "py-4 bg-red-600 hover:bg-red-500 text-white transition-colors font-bold tracking-wider";
-                    btn.textContent = "DELETE ARCHIVE";
+                    btn.textContent = "确认删除";
                 } else {
                     iconContainer.className = "mb-4 mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-amber-900/20 text-amber-500 border border-amber-500/30";
                     iconContainer.innerHTML = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>`;
                     btn.className = "py-4 bg-amber-600 hover:bg-amber-500 text-white transition-colors font-bold tracking-wider";
-                    btn.textContent = "CONFIRM RESTORE";
+                    btn.textContent = "执行恢复";
                 }
 
                 btn.onclick = () => { callback(); closeConfirm(); };
@@ -631,14 +631,14 @@
             els.connectBtn.onclick = connect;
             $('#confirm-cancel').onclick = closeConfirm;
             $('#backup').onclick = async () => {
-                setStatus('CREATING SNAPSHOT...', 'loading');
+                setStatus('正在创建快照...', 'loading');
                 const r = await api('POST', '/backup');
-                if (r.ok) { setStatus('SNAPSHOT CREATED', 'success'); refresh(); }
-                else setStatus('BACKUP FAILED', 'error');
+                if (r.ok) { setStatus('备份创建成功', 'success'); refresh(); }
+                else setStatus('备份失败', 'error');
             };
             $('#refresh').onclick = refresh;
-            $('#health').onclick = () => { setStatus('PINGING...', 'loading'); api('GET', '/health').then(r => setStatus(r.ok ? 'SYSTEM ONLINE' : 'OFFLINE', r.ok ? 'success' : 'error')); };
-            $('#log-toggle').onclick = function () { logAuto = !logAuto; this.textContent = logAuto ? 'LIVE' : 'PAUSED'; this.className = logAuto ? 'text-[10px] text-cyan-500/80 font-mono transition' : 'text-[10px] text-slate-500 font-mono transition'; };
+            $('#health').onclick = () => { setStatus('检测中...', 'loading'); api('GET', '/health').then(r => setStatus(r.ok ? '系统在线' : '离线', r.ok ? 'success' : 'error')); };
+            $('#log-toggle').onclick = function () { logAuto = !logAuto; this.textContent = logAuto ? '实时' : '暂停'; this.className = logAuto ? 'text-[10px] text-cyan-500/80 font-mono transition' : 'text-[10px] text-slate-500 font-mono transition'; };
             $('#log-clear').onclick = () => { api('DELETE', '/logs'); els.logBox.textContent = ''; };
 
             loadCfg();
