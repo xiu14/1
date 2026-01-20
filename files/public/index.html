@@ -267,7 +267,7 @@
                         </div>
                     </button>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-3 gap-3">
                         <button id="refresh"
                             class="btn-hover-effect p-3 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-white flex flex-col items-center gap-1">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,7 +275,7 @@
                                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
                                 </path>
                             </svg>
-                            <span class="text-[10px] font-bold">列表刷新</span>
+                            <span class="text-[10px] font-bold">刷新</span>
                         </button>
                         <button id="health"
                             class="btn-hover-effect p-3 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-slate-600 text-slate-400 hover:text-green-400 flex flex-col items-center gap-1">
@@ -283,7 +283,18 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span class="text-[10px] font-bold mb-0.5">系统状态</span>
+                            <span class="text-[10px] font-bold">状态</span>
+                        </button>
+                        <button id="settings-btn"
+                            class="btn-hover-effect p-3 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-purple-600 text-slate-400 hover:text-purple-400 flex flex-col items-center gap-1">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold">设置</span>
                         </button>
                     </div>
                 </div>
@@ -355,6 +366,160 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-md rounded-2xl overflow-hidden scale-95 transition-transform duration-300 transform"
+            id="settings-box">
+            <!-- Header -->
+            <div class="px-6 py-4 border-b border-white/10 bg-gradient-to-r from-purple-900/30 to-cyan-900/30">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 rounded-lg bg-purple-500/20 text-purple-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">系统设置</h3>
+                            <p class="text-[10px] text-slate-400 font-tech">SERVICE CONFIGURATION</p>
+                        </div>
+                    </div>
+                    <button id="settings-close"
+                        class="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
+                <!-- Port -->
+                <div class="space-y-1.5">
+                    <label class="flex items-center gap-2 text-xs font-bold text-slate-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
+                        服务端口
+                    </label>
+                    <input id="cfg-port" type="number" placeholder="8787"
+                        class="glass-input w-full rounded-xl px-4 py-3 text-sm font-mono">
+                </div>
+
+                <!-- Data Dir -->
+                <div class="space-y-1.5">
+                    <label class="flex items-center gap-2 text-xs font-bold text-slate-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        数据目录
+                    </label>
+                    <input id="cfg-data-dir" type="text" placeholder="/root/sillytavern/data"
+                        class="glass-input w-full rounded-xl px-4 py-3 text-sm font-mono">
+                </div>
+
+                <!-- Backup Dir -->
+                <div class="space-y-1.5">
+                    <label class="flex items-center gap-2 text-xs font-bold text-slate-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                        备份目录
+                    </label>
+                    <input id="cfg-backup-dir" type="text" placeholder="/opt/st-remote-backup/backups"
+                        class="glass-input w-full rounded-xl px-4 py-3 text-sm font-mono">
+                </div>
+
+                <!-- User & Pass -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1.5">
+                        <label class="flex items-center gap-2 text-xs font-bold text-slate-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                            用户名
+                        </label>
+                        <input id="cfg-user" type="text" placeholder="st"
+                            class="glass-input w-full rounded-xl px-4 py-3 text-sm font-mono">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="flex items-center gap-2 text-xs font-bold text-slate-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                            新密码
+                        </label>
+                        <input id="cfg-pass" type="password" placeholder="留空则不修改"
+                            class="glass-input w-full rounded-xl px-4 py-3 text-sm">
+                    </div>
+                </div>
+
+                <!-- Backup Keep -->
+                <div class="space-y-1.5">
+                    <label class="flex items-center gap-2 text-xs font-bold text-slate-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                        备份保留份数
+                    </label>
+                    <input id="cfg-keep" type="number" min="1" max="100" placeholder="5"
+                        class="glass-input w-full rounded-xl px-4 py-3 text-sm font-mono">
+                </div>
+
+                <!-- Status Message -->
+                <div id="settings-status" class="hidden text-center text-sm py-2 rounded-lg"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-white/10 bg-black/20 flex gap-3">
+                <button id="settings-save"
+                    class="flex-1 btn-hover-effect bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    保存配置
+                </button>
+                <button id="settings-restart"
+                    class="btn-hover-effect bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-500 hover:to-orange-600 text-white font-bold py-3 px-5 rounded-xl flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                        </path>
+                    </svg>
+                    重启
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Modal -->
+    <div id="progress-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-sm rounded-2xl p-6 scale-95 transition-transform duration-300 transform"
+            id="progress-box">
+            <div class="text-center mb-6">
+                <div id="progress-icon"
+                    class="mb-4 mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-cyan-900/20 text-cyan-500 border border-cyan-500/30">
+                    <svg class="w-8 h-8 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                </div>
+                <h3 id="progress-title" class="text-xl font-bold tracking-wide text-white mb-1">下载中</h3>
+                <p id="progress-filename" class="text-xs text-slate-400 font-mono truncate px-4"></p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mb-4">
+                <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div id="progress-bar"
+                        class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300"
+                        style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center text-xs">
+                <span id="progress-percent" class="text-cyan-400 font-bold">0%</span>
+                <span id="progress-size" class="text-slate-500 font-mono">0 MB / 0 MB</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
         // Star Background Gen
@@ -392,7 +557,26 @@
                 countBadge: $('#file-count'),
                 confirmModal: $('#custom-confirm'),
                 confirmBox: $('#confirm-box'),
-                emptyState: $('#empty-state')
+                emptyState: $('#empty-state'),
+                // Settings Modal
+                settingsModal: $('#settings-modal'),
+                settingsBox: $('#settings-box'),
+                cfgPort: $('#cfg-port'),
+                cfgDataDir: $('#cfg-data-dir'),
+                cfgBackupDir: $('#cfg-backup-dir'),
+                cfgUser: $('#cfg-user'),
+                cfgPass: $('#cfg-pass'),
+                cfgKeep: $('#cfg-keep'),
+                settingsStatus: $('#settings-status'),
+                // Progress Modal
+                progressModal: $('#progress-modal'),
+                progressBox: $('#progress-box'),
+                progressIcon: $('#progress-icon'),
+                progressTitle: $('#progress-title'),
+                progressFilename: $('#progress-filename'),
+                progressBar: $('#progress-bar'),
+                progressPercent: $('#progress-percent'),
+                progressSize: $('#progress-size')
             };
 
             // Auth Utils
@@ -531,8 +715,30 @@
                         `是否确认使用归档 <br><b class="text-amber-400 font-mono text-xs">${it.name}</b><br>覆盖当前主数据？<br><br><span class="text-amber-500/80 text-xs border border-amber-500/20 px-2 py-1 rounded bg-amber-500/5">警告：自归档生成后产生的新进度将永久丢失。</span>`,
                         async () => {
                             setStatus('正在恢复...', 'loading');
-                            const res = await api('POST', `/restore?name=${encodeURIComponent(it.name)}`);
-                            setStatus(res.ok ? '恢复完成' : '恢复失败', res.ok ? 'success' : 'error');
+                            showProgress('恢复中', it.name, 'restore');
+
+                            // 模拟进度动画（因为后端没有进度反馈）
+                            let fakeProgress = 0;
+                            const progressInterval = setInterval(() => {
+                                fakeProgress += Math.random() * 15;
+                                if (fakeProgress > 90) fakeProgress = 90;
+                                updateProgress(fakeProgress, 100);
+                            }, 200);
+
+                            try {
+                                const res = await api('POST', `/restore?name=${encodeURIComponent(it.name)}`);
+                                clearInterval(progressInterval);
+                                updateProgress(100, 100);
+
+                                setTimeout(() => {
+                                    hideProgress();
+                                    setStatus(res.ok ? '恢复完成' : '恢复失败', res.ok ? 'success' : 'error');
+                                }, 500);
+                            } catch (e) {
+                                clearInterval(progressInterval);
+                                hideProgress();
+                                setStatus('恢复失败', 'error');
+                            }
                         },
                         'restore'
                     );
@@ -552,26 +758,109 @@
                 });
             }
 
-            // --- Download Fix Preserved ---
+            // --- Progress Modal Functions ---
+            function formatBytes(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function showProgress(title, filename, type = 'download') {
+                els.progressTitle.textContent = title;
+                els.progressFilename.textContent = filename;
+                els.progressBar.style.width = '0%';
+                els.progressPercent.textContent = '0%';
+                els.progressSize.textContent = '准备中...';
+
+                // 更新图标和颜色
+                if (type === 'restore') {
+                    els.progressIcon.className = 'mb-4 mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-amber-900/20 text-amber-500 border border-amber-500/30';
+                    els.progressIcon.innerHTML = `<svg class="w-8 h-8 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>`;
+                    els.progressBar.className = 'h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300';
+                    els.progressPercent.className = 'text-amber-400 font-bold';
+                } else {
+                    els.progressIcon.className = 'mb-4 mx-auto w-16 h-16 rounded-full flex items-center justify-center bg-cyan-900/20 text-cyan-500 border border-cyan-500/30';
+                    els.progressIcon.innerHTML = `<svg class="w-8 h-8 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>`;
+                    els.progressBar.className = 'h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300';
+                    els.progressPercent.className = 'text-cyan-400 font-bold';
+                }
+
+                els.progressModal.classList.remove('hidden');
+                setTimeout(() => {
+                    els.progressModal.classList.remove('opacity-0');
+                    els.progressBox.classList.remove('scale-95');
+                    els.progressBox.classList.add('scale-100');
+                }, 10);
+            }
+
+            function updateProgress(loaded, total) {
+                const percent = total > 0 ? Math.round((loaded / total) * 100) : 0;
+                els.progressBar.style.width = percent + '%';
+                els.progressPercent.textContent = percent + '%';
+                els.progressSize.textContent = `${formatBytes(loaded)} / ${formatBytes(total)}`;
+            }
+
+            function hideProgress() {
+                els.progressModal.classList.add('opacity-0');
+                els.progressBox.classList.add('scale-95');
+                els.progressBox.classList.remove('scale-100');
+                setTimeout(() => els.progressModal.classList.add('hidden'), 300);
+            }
+
+            // --- Download with Progress ---
             async function downloadFile(name, btn) {
                 const originalContent = btn.innerHTML;
                 btn.innerHTML = `<div class="loader-ring w-4 h-4 border-2 mx-auto"></div>`;
                 btn.classList.add('cursor-not-allowed', 'opacity-70');
+
+                showProgress('下载中', name, 'download');
 
                 try {
                     const res = await fetch(`/download?name=${encodeURIComponent(name)}`, { headers: { 'Authorization': auth() } });
                     if (res.status === 401) throw new Error('Auth Failed');
                     if (!res.ok) throw new Error('Download Fail');
 
-                    const blob = await res.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url; a.download = name;
-                    document.body.appendChild(a); a.click();
-                    window.URL.revokeObjectURL(url); a.remove();
+                    const contentLength = res.headers.get('content-length');
+                    const total = parseInt(contentLength, 10) || 0;
+
+                    if (total === 0 || !res.body) {
+                        // Fallback: 没有Content-Length或不支持ReadableStream
+                        const blob = await res.blob();
+                        updateProgress(blob.size, blob.size);
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url; a.download = name;
+                        document.body.appendChild(a); a.click();
+                        window.URL.revokeObjectURL(url); a.remove();
+                    } else {
+                        // 使用 ReadableStream 读取进度
+                        const reader = res.body.getReader();
+                        const chunks = [];
+                        let loaded = 0;
+
+                        while (true) {
+                            const { done, value } = await reader.read();
+                            if (done) break;
+                            chunks.push(value);
+                            loaded += value.length;
+                            updateProgress(loaded, total);
+                        }
+
+                        const blob = new Blob(chunks);
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url; a.download = name;
+                        document.body.appendChild(a); a.click();
+                        window.URL.revokeObjectURL(url); a.remove();
+                    }
+
+                    setStatus('下载完成', 'success');
                 } catch (e) {
                     setStatus('下载失败', 'error');
                 } finally {
+                    hideProgress();
                     btn.innerHTML = originalContent;
                     btn.classList.remove('cursor-not-allowed', 'opacity-70');
                 }
@@ -627,6 +916,140 @@
                 }, 3000);
             }
 
+            // Settings Modal Functions
+            function showSettingsStatus(msg, type) {
+                els.settingsStatus.textContent = msg;
+                els.settingsStatus.className = 'text-center text-sm py-2 rounded-lg ' +
+                    (type === 'success' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                        type === 'error' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+                            'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30');
+                els.settingsStatus.classList.remove('hidden');
+                if (type !== 'loading') {
+                    setTimeout(() => els.settingsStatus.classList.add('hidden'), 3000);
+                }
+            }
+
+            async function openSettings() {
+                // Load current config
+                showSettingsStatus('加载配置中...', 'loading');
+                try {
+                    const res = await fetch('/config', { headers: { 'Authorization': auth() } });
+                    if (res.status === 401) {
+                        showSettingsStatus('权限验证失败', 'error');
+                        return;
+                    }
+                    const data = await res.json();
+                    if (data.ok && data.config) {
+                        const cfg = data.config;
+                        els.cfgPort.value = cfg.port || '';
+                        els.cfgDataDir.value = cfg.dataDir || '';
+                        els.cfgBackupDir.value = cfg.backupDir || '';
+                        els.cfgUser.value = cfg.user || '';
+                        els.cfgPass.value = ''; // 密码不回显
+                        els.cfgKeep.value = cfg.backupKeep || '';
+                        els.settingsStatus.classList.add('hidden');
+                    } else {
+                        showSettingsStatus(data.error || '加载失败', 'error');
+                    }
+                } catch (e) {
+                    showSettingsStatus('网络错误', 'error');
+                }
+
+                // Show modal
+                els.settingsModal.classList.remove('hidden');
+                setTimeout(() => {
+                    els.settingsModal.classList.remove('opacity-0');
+                    els.settingsBox.classList.remove('scale-95');
+                    els.settingsBox.classList.add('scale-100');
+                }, 10);
+            }
+
+            function closeSettings() {
+                els.settingsModal.classList.add('opacity-0');
+                els.settingsBox.classList.add('scale-95');
+                els.settingsBox.classList.remove('scale-100');
+                setTimeout(() => els.settingsModal.classList.add('hidden'), 300);
+            }
+
+            async function saveSettings() {
+                showSettingsStatus('保存中...', 'loading');
+                try {
+                    const newCfg = {
+                        port: parseInt(els.cfgPort.value, 10) || undefined,
+                        dataDir: els.cfgDataDir.value || undefined,
+                        backupDir: els.cfgBackupDir.value || undefined,
+                        user: els.cfgUser.value || undefined,
+                        pass: els.cfgPass.value || undefined, // 空字符串不会更新密码
+                        backupKeep: parseInt(els.cfgKeep.value, 10) || undefined
+                    };
+
+                    const res = await fetch('/config', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': auth(),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(newCfg)
+                    });
+
+                    if (res.status === 401) {
+                        showSettingsStatus('权限验证失败', 'error');
+                        return;
+                    }
+
+                    const data = await res.json();
+                    if (data.ok) {
+                        showSettingsStatus('配置已保存，需重启生效', 'success');
+                    } else {
+                        showSettingsStatus(data.error || '保存失败', 'error');
+                    }
+                } catch (e) {
+                    showSettingsStatus('网络错误', 'error');
+                }
+            }
+
+            async function restartService() {
+                if (!confirm('确定要重启服务吗？\n\n服务将立即重启，页面可能会短暂无响应。')) return;
+
+                showSettingsStatus('正在重启...', 'loading');
+                setStatus('服务重启中...', 'loading');
+
+                try {
+                    const res = await fetch('/restart', {
+                        method: 'POST',
+                        headers: { 'Authorization': auth() }
+                    });
+
+                    if (res.ok) {
+                        showSettingsStatus('重启指令已发送，等待恢复...', 'success');
+                        closeSettings();
+
+                        // 延迟后尝试重新连接
+                        setTimeout(async () => {
+                            setStatus('正在重新连接...', 'loading');
+                            let retries = 10;
+                            const tryConnect = async () => {
+                                try {
+                                    const r = await api('GET', '/health');
+                                    if (r.ok) {
+                                        setStatus('服务已恢复', 'success');
+                                        refresh();
+                                        return;
+                                    }
+                                } catch { }
+                                if (--retries > 0) setTimeout(tryConnect, 2000);
+                                else setStatus('重连失败，请刷新页面', 'error');
+                            };
+                            tryConnect();
+                        }, 3000);
+                    } else {
+                        showSettingsStatus('重启失败', 'error');
+                    }
+                } catch (e) {
+                    showSettingsStatus('网络错误', 'error');
+                }
+            }
+
             // Listeners
             els.connectBtn.onclick = connect;
             $('#confirm-cancel').onclick = closeConfirm;
@@ -640,6 +1063,12 @@
             $('#health').onclick = () => { setStatus('检测中...', 'loading'); api('GET', '/health').then(r => setStatus(r.ok ? '系统在线' : '离线', r.ok ? 'success' : 'error')); };
             $('#log-toggle').onclick = function () { logAuto = !logAuto; this.textContent = logAuto ? '实时' : '暂停'; this.className = logAuto ? 'text-[10px] text-cyan-500/80 font-mono transition' : 'text-[10px] text-slate-500 font-mono transition'; };
             $('#log-clear').onclick = () => { api('DELETE', '/logs'); els.logBox.textContent = ''; };
+
+            // Settings Listeners
+            $('#settings-btn').onclick = openSettings;
+            $('#settings-close').onclick = closeSettings;
+            $('#settings-save').onclick = saveSettings;
+            $('#settings-restart').onclick = restartService;
 
             loadCfg();
         })();

@@ -4,15 +4,48 @@ const fsp = require('fs').promises;
 const path = require('path');
 const tar = require('tar');
 const basicAuth = require('basic-auth');
+const { spawn } = require('child_process');
 
-const PORT = process.env.PORT || 8787;
-const DATA_DIR = process.env.DATA_DIR || '/root/sillytavern/data';
-const BACKUP_DIR = process.env.BACKUP_DIR || '/opt/st-remote-backup/backups';
-const USER = process.env.BASIC_USER || '';
-const PASS = process.env.BASIC_PASS || '';
-const BACKUP_KEEP = parseInt(process.env.BACKUP_KEEP || '5', 10);
+// 配置文件路径
+const APP_DIR = process.env.APP_DIR || '/opt/st-remote-backup';
+const CONFIG_FILE = path.join(APP_DIR, 'config.json');
 
-async function ensureDir(dir) { await fsp.mkdir(dir, { recursive: true }).catch(()=>{}); }
+// 加载配置（优先从 config.json 读取，否则使用环境变量）
+function loadConfig() {
+  const defaults = {
+    port: parseInt(process.env.PORT || '8787', 10),
+    dataDir: process.env.DATA_DIR || '/root/sillytavern/data',
+    backupDir: process.env.BACKUP_DIR || '/opt/st-remote-backup/backups',
+    user: process.env.BASIC_USER || '',
+    pass: process.env.BASIC_PASS || '',
+    backupKeep: parseInt(process.env.BACKUP_KEEP || '5', 10)
+  };
+  try {
+    if (fs.existsSync(CONFIG_FILE)) {
+      const data = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
+      return { ...defaults, ...data };
+    }
+  } catch (e) {
+    console.error('[config] Failed to load config.json:', e.message);
+  }
+  return defaults;
+}
+
+// 保存配置到文件
+async function saveConfig(cfg) {
+  await fsp.writeFile(CONFIG_FILE, JSON.stringify(cfg, null, 2), 'utf8');
+}
+
+// 加载当前配置
+const CONFIG = loadConfig();
+const PORT = CONFIG.port;
+const DATA_DIR = CONFIG.dataDir;
+const BACKUP_DIR = CONFIG.backupDir;
+const USER = CONFIG.user;
+const PASS = CONFIG.pass;
+const BACKUP_KEEP = CONFIG.backupKeep;
+
+async function ensureDir(dir) { await fsp.mkdir(dir, { recursive: true }).catch(() => { }); }
 
 // 内存日志环形缓冲（用于 /logs 页面展示）
 const LOG_BUF = [];
@@ -31,9 +64,9 @@ console.error = (...a) => pushLog('error', a.join(' '));
 
 // 排除规则
 const EXCLUDE_SEGMENTS_ALWAYS = new Set(['.git', 'node_modules']);
-const EXCLUDE_SEGMENTS_CACHE = new Set(['_cache','_uploads','_storage','_webpack','.cache','.parcel-cache','.vite','coverage']);
+const EXCLUDE_SEGMENTS_CACHE = new Set(['_cache', '_uploads', '_storage', '_webpack', '.cache', '.parcel-cache', '.vite', 'coverage']);
 const EXCLUDE_PREFIXES = ['default-user/backups'];
-const EXCLUDE_SUFFIXES = ['.zip','.tar','.tar.gz'];
+const EXCLUDE_SUFFIXES = ['.zip', '.tar', '.tar.gz'];
 
 function shouldInclude(relPath) {
   const p = relPath.replace(/^\.\/?/, '');
@@ -51,10 +84,10 @@ function authGuard(req, res, next) {
   if (!USER && !PASS) return next();
   const creds = basicAuth(req);
   if (creds && creds.name === USER && creds.pass === PASS) return next();
-  
+
   // 关键修改：注释掉下面这行，禁止浏览器弹出原生登录框
   // res.set('WWW-Authenticate', 'Basic realm="st-backup"');
-  
+
   return res.status(401).send('Unauthorized');
 }
 
@@ -105,8 +138,8 @@ app.post('/backup', async (req, res) => {
       filter: (entryPath) => shouldInclude(entryPath)
     }, ['.']);
     const st = await fsp.stat(out);
-    console.log(`[backup] done name=${name} size=${(st.size/1048576).toFixed(2)}MB time=${Date.now()-t0}ms`);
-    
+    console.log(`[backup] done name=${name} size=${(st.size / 1048576).toFixed(2)}MB time=${Date.now() - t0}ms`);
+
     // 限制备份数量最多5份
     const files = await fsp.readdir(BACKUP_DIR);
     const backups = [];
@@ -144,7 +177,7 @@ app.get('/list', async (req, res) => {
       const st = await fsp.stat(p);
       list.push({ name: d.name, size: st.size, mtime: st.mtime });
     }
-    list.sort((a,b)=> new Date(b.mtime)-new Date(a.mtime));
+    list.sort((a, b) => new Date(b.mtime) - new Date(a.mtime));
     console.log(`[list] ok count=${list.length}`);
     res.json({ ok: true, items: list });
   } catch (e) {
@@ -157,7 +190,7 @@ app.get('/list', async (req, res) => {
 app.get('/download', async (req, res) => {
   const name = (req.query.name || '').toString();
   if (!name) return res.status(400).send('name required');
-  const safeName = path.basename(name); 
+  const safeName = path.basename(name);
   const file = path.join(BACKUP_DIR, safeName);
   try {
     await fsp.access(file);
@@ -180,7 +213,7 @@ app.post('/restore', async (req, res) => {
     const file = path.join(BACKUP_DIR, path.basename(name));
     await fsp.access(file);
     await tar.x({ file, cwd: DATA_DIR });
-    console.log(`[restore] done name=${name} time=${Date.now()-t0}ms`);
+    console.log(`[restore] done name=${name} time=${Date.now() - t0}ms`);
     res.json({ ok: true });
   } catch (e) {
     console.error('[restore] error:', e && e.stack || e);
@@ -201,6 +234,70 @@ app.delete('/delete', async (req, res) => {
     console.error('[delete] error:', e && e.stack || e);
     res.status(500).json({ ok: false, error: e.message });
   }
+});
+
+// 获取当前配置
+app.get('/config', (req, res) => {
+  try {
+    const cfg = loadConfig();
+    // 不返回密码明文，只返回是否已设置
+    res.json({
+      ok: true,
+      config: {
+        port: cfg.port,
+        dataDir: cfg.dataDir,
+        backupDir: cfg.backupDir,
+        user: cfg.user,
+        hasPassword: !!cfg.pass,
+        backupKeep: cfg.backupKeep
+      }
+    });
+  } catch (e) {
+    console.error('[config] get error:', e && e.stack || e);
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+// 保存配置
+app.post('/config', async (req, res) => {
+  try {
+    const { port, dataDir, backupDir, user, pass, backupKeep } = req.body;
+    const currentCfg = loadConfig();
+
+    const newCfg = {
+      port: typeof port === 'number' ? port : (parseInt(port, 10) || currentCfg.port),
+      dataDir: dataDir || currentCfg.dataDir,
+      backupDir: backupDir || currentCfg.backupDir,
+      user: user !== undefined ? user : currentCfg.user,
+      // 只有在明确传入新密码时才更新密码
+      pass: pass !== undefined && pass !== '' ? pass : currentCfg.pass,
+      backupKeep: typeof backupKeep === 'number' ? backupKeep : (parseInt(backupKeep, 10) || currentCfg.backupKeep)
+    };
+
+    await saveConfig(newCfg);
+    console.log(`[config] saved: port=${newCfg.port}, dataDir=${newCfg.dataDir}, backupKeep=${newCfg.backupKeep}`);
+    res.json({ ok: true });
+  } catch (e) {
+    console.error('[config] save error:', e && e.stack || e);
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+// 重启服务（使用PM2）
+app.post('/restart', (req, res) => {
+  console.log('[restart] Restarting service via PM2...');
+
+  // 立即返回成功响应，因为当前进程即将被终止
+  res.json({ ok: true, message: 'Service is restarting...' });
+
+  // 延迟执行重启，确保响应已发送
+  setTimeout(() => {
+    const child = spawn('pm2', ['restart', 'st-backup', '--update-env'], {
+      detached: true,
+      stdio: 'ignore'
+    });
+    child.unref();
+  }, 500);
 });
 
 app.listen(PORT, () => {
