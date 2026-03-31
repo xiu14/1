@@ -42,7 +42,7 @@
   - Must Exclude: `.git`, `node_modules`.
   - Cache/Temp: `_cache`, `_uploads`, `_storage`, `coverage`, etc.
   - Self: Exclude existing archives inside the data directory (`*.tar.gz`, `*.zip`).
-- **Retention**: 改为“每天一份”命名策略，同一天重复备份会覆盖当天归档，不再使用“固定保留 5 份”模式。
+- **Retention**: 本地只保留最新一份归档；R2 端使用“每天一份”命名策略，同一天重复备份会覆盖当天归档，不再使用“固定保留 5 份”模式。
 - **Remote Storage**: 备份完成后可上传到 Cloudflare R2，任意部署节点只要填写相同 R2 信息即可列出、下载和恢复远端备份。
 
 ### C. Restore Strategy (恢复策略)

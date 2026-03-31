@@ -390,6 +390,18 @@ async function listLocalBackups(backupDir) {
   return items;
 }
 
+async function pruneLocalBackups(backupDir, keepName) {
+  await ensureDir(backupDir);
+  const files = await fsp.readdir(backupDir, { withFileTypes: true });
+
+  for (const file of files) {
+    if (!file.isFile() || !isBackupFileName(file.name) || file.name === keepName) continue;
+    const filePath = path.join(backupDir, file.name);
+    await fsp.unlink(filePath).catch(() => { });
+    console.log(`[backup] auto-deleted local backup: ${file.name}`);
+  }
+}
+
 function mergeBackupLists(localItems, remoteItems) {
   const map = new Map();
 
@@ -547,6 +559,7 @@ app.post('/backup', async (req, res) => {
 
     const stat = await fsp.stat(out);
     console.log(`[backup] done name=${name} size=${(stat.size / 1048576).toFixed(2)}MB time=${Date.now() - t0}ms`);
+    await pruneLocalBackups(cfg.backupDir, name);
 
     let warning = '';
     if (hasR2Config(cfg)) {
