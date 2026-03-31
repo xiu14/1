@@ -30,7 +30,7 @@ curl -fsSL https://raw.githubusercontent.com/xiu14/1/main/scripts/install.sh | b
 
 - 端口：`8787`
 - 数据目录：`/root/sillytavern/data`
-- 备份目录：`/opt/st-remote-backup/backups`
+- 备份目录：`/root/st-remote-backup/backups`
 - 默认账号：`st`
 - 默认密码：`2025`
 
@@ -45,7 +45,7 @@ http://你的服务器IP:8787/
 如果你是直接在服务器上 `git clone` / `git pull`，推荐流程：
 
 ```bash
-cd /opt/st-remote-backup
+cd /root/st-remote-backup
 git pull
 npm ci --omit=dev
 pm2 restart st-backup --update-env
@@ -57,7 +57,7 @@ pm2 restart st-backup --update-env
 bash scripts/install.sh \
   --port 8787 \
   --data /root/sillytavern/data \
-  --backup-dir /opt/st-remote-backup/backups \
+  --backup-dir /root/st-remote-backup/backups \
   --user st \
   --pass 2025 \
   --cron "0 4 * * *"
@@ -76,7 +76,7 @@ bash scripts/install.sh \
 ## 当前备份逻辑
 
 - 备份格式：`.tar.gz`
-- 本地保留：每次备份完成后，本地只保留最新一份归档
+- 本地保留：如果未配置 R2，则本地保留最新一份；如果已配置 R2 且上传成功，本地归档会作为临时文件自动删除
 - 命名策略：R2 端按天一份，同一天重复备份会覆盖当天归档
 - 可选上传到 Cloudflare R2
 - 任意部署节点只要填写相同的 R2 信息和本地数据目录，就能拉取并恢复备份

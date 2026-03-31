@@ -3,13 +3,13 @@ set -euo pipefail
 
 PORT=8787
 DATA_DIR="/root/sillytavern/data"
-BACKUP_DIR="/opt/st-remote-backup/backups"
 BASIC_USER="st"
 BASIC_PASS="2025"
 CRON_EXPR=""
 NO_FIREWALL=0
 
-APP_DIR="/opt/st-remote-backup"
+APP_DIR="/root/st-remote-backup"
+BACKUP_DIR="$APP_DIR/backups"
 PUBLIC_DIR="$APP_DIR/public"
 REPO_RAW="https://raw.githubusercontent.com/xiu14/1/main"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -85,6 +85,7 @@ fi
 
 echo "[i] Restarting service..."
 PORT="$PORT" \
+APP_DIR="$APP_DIR" \
 DATA_DIR="$DATA_DIR" \
 BACKUP_DIR="$BACKUP_DIR" \
 BASIC_USER="$BASIC_USER" \

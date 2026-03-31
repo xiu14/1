@@ -22,9 +22,9 @@
   - `server.js`: 单文件后端服务 (API + 静态资源托管).
   - `public/index.html`: 单文件前端 UI (包含所有 JS/CSS 逻辑).
 - **Runtime Paths (Default)**:
-  - **App Dir**: `/opt/st-remote-backup`
+  - **App Dir**: `/root/st-remote-backup`
   - **Data Dir (Target)**: `/root/sillytavern/data` (可配置)
-  - **Backup Dir**: `/opt/st-remote-backup/backups`
+  - **Backup Dir**: `/root/st-remote-backup/backups`
   - **Config**: 环境变量或 `config.json` 传递 (PORT, DATA_DIR, BASIC_USER, R2_* 等).
 
 ## 4. Key Logic & Constraints (核心逻辑与约束)
@@ -42,7 +42,7 @@
   - Must Exclude: `.git`, `node_modules`.
   - Cache/Temp: `_cache`, `_uploads`, `_storage`, `coverage`, etc.
   - Self: Exclude existing archives inside the data directory (`*.tar.gz`, `*.zip`).
-- **Retention**: 本地只保留最新一份归档；R2 端使用“每天一份”命名策略，同一天重复备份会覆盖当天归档，不再使用“固定保留 5 份”模式。
+- **Retention**: 未配置 R2 时本地只保留最新一份归档；配置 R2 且上传成功后，本地归档仅作临时文件并立即删除。R2 端使用“每天一份”命名策略，同一天重复备份会覆盖当天归档，不再使用“固定保留 5 份”模式。
 - **Remote Storage**: 备份完成后可上传到 Cloudflare R2，任意部署节点只要填写相同 R2 信息即可列出、下载和恢复远端备份。
 
 ### C. Restore Strategy (恢复策略)

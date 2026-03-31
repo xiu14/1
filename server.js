@@ -9,7 +9,7 @@ const { spawn } = require('child_process');
 const { Readable } = require('stream');
 const { pipeline } = require('stream/promises');
 
-const APP_DIR = process.env.APP_DIR || '/opt/st-remote-backup';
+const APP_DIR = process.env.APP_DIR || path.resolve(__dirname);
 const CONFIG_FILE = path.join(APP_DIR, 'config.json');
 const DISPLAY_TIMEZONE = 'Asia/Shanghai';
 const EMPTY_SHA256 = crypto.createHash('sha256').update('').digest('hex');
@@ -18,7 +18,7 @@ function loadConfig() {
   const defaults = {
     port: parseInt(process.env.PORT || '8787', 10),
     dataDir: process.env.DATA_DIR || '/root/sillytavern/data',
-    backupDir: process.env.BACKUP_DIR || '/opt/st-remote-backup/backups',
+    backupDir: process.env.BACKUP_DIR || path.join(APP_DIR, 'backups'),
     user: process.env.BASIC_USER || '',
     pass: process.env.BASIC_PASS || '',
     r2AccountId: process.env.R2_ACCOUNT_ID || '',
@@ -390,7 +390,7 @@ async function listLocalBackups(backupDir) {
   return items;
 }
 
-async function pruneLocalBackups(backupDir, keepName) {
+async function pruneLocalBackups(backupDir, keepName = '') {
   await ensureDir(backupDir);
   const files = await fsp.readdir(backupDir, { withFileTypes: true });
 
@@ -559,19 +559,22 @@ app.post('/backup', async (req, res) => {
 
     const stat = await fsp.stat(out);
     console.log(`[backup] done name=${name} size=${(stat.size / 1048576).toFixed(2)}MB time=${Date.now() - t0}ms`);
-    await pruneLocalBackups(cfg.backupDir, name);
 
+    let keepLocalName = name;
     let warning = '';
     if (hasR2Config(cfg)) {
       try {
         console.log(`[backup] uploading to R2 bucket=${cfg.r2Bucket}`);
         await uploadBackupToR2(cfg, out, name);
         console.log(`[backup] uploaded to R2: ${name}`);
+        keepLocalName = '';
       } catch (err) {
         warning = err.message;
         console.error(`[backup] R2 upload failed: ${warning}`);
       }
     }
+
+    await pruneLocalBackups(cfg.backupDir, keepLocalName);
 
     res.json({ ok: true, file: name, warning: warning || undefined });
   } catch (e) {
