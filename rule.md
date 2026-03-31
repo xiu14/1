@@ -19,8 +19,8 @@
 ## 3. Architecture & File Structure (架构与文件)
 - **Root**:
   - `scripts/install.sh`: 一键安装脚本 (处理 PM2, 防火墙, Cron, 目录创建).
-  - `files/server.js`: 单文件后端服务 (API + 静态资源托管).
-  - `files/public/index.html`: 单文件前端 UI (包含所有 JS/CSS 逻辑).
+  - `server.js`: 单文件后端服务 (API + 静态资源托管).
+  - `public/index.html`: 单文件前端 UI (包含所有 JS/CSS 逻辑).
 - **Runtime Paths (Default)**:
   - **App Dir**: `/opt/st-remote-backup`
   - **Data Dir (Target)**: `/root/sillytavern/data` (可配置)
@@ -68,8 +68,8 @@
 - 安装脚本需具备幂等性 (Idempotent)：支持重复运行以进行更新。
 
 ## 6. Workflow Guidelines (工作流指南)
-- **Modifying UI**: 直接编辑 `files/public/index.html`。注意不要破坏 Tailwind 类名。
-- **Modifying Backend**: 编辑 `files/server.js`。
+- **Modifying UI**: 直接编辑 `public/index.html`。注意不要破坏 Tailwind 类名。
+- **Modifying Backend**: 编辑 `server.js`。
 - **Testing**:
   - 本地测试时，需确保 Node 环境 >= 18。
   - 模拟生产环境路径或使用相对路径进行调试。
