@@ -331,6 +331,32 @@ async function uploadBackupToR2(cfg, filePath, name) {
   }
 }
 
+async function sleep(ms) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function uploadBackupToR2WithRetry(cfg, filePath, name, retries = 3) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
+    try {
+      await uploadBackupToR2(cfg, filePath, name);
+      if (attempt > 1) {
+        console.log(`[backup] R2 upload succeeded on retry ${attempt}/${retries}: ${name}`);
+      }
+      return { attempts: attempt };
+    } catch (error) {
+      lastError = error;
+      console.error(`[backup] R2 upload attempt ${attempt}/${retries} failed: ${error.message}`);
+      if (attempt < retries) {
+        await sleep(attempt * 1500);
+      }
+    }
+  }
+
+  throw lastError;
+}
+
 async function getR2BackupResponse(cfg, name) {
   const response = await signedR2Fetch(cfg, 'GET', getBackupObjectKey(name, cfg));
   if (response.status === 404) return null;
@@ -565,8 +591,11 @@ app.post('/backup', async (req, res) => {
     if (hasR2Config(cfg)) {
       try {
         console.log(`[backup] uploading to R2 bucket=${cfg.r2Bucket}`);
-        await uploadBackupToR2(cfg, out, name);
+        const result = await uploadBackupToR2WithRetry(cfg, out, name, 3);
         console.log(`[backup] uploaded to R2: ${name}`);
+        if (result.attempts > 1) {
+          console.log(`[backup] R2 upload finished after ${result.attempts} attempts: ${name}`);
+        }
         keepLocalName = '';
       } catch (err) {
         warning = err.message;
@@ -580,6 +609,31 @@ app.post('/backup', async (req, res) => {
   } catch (e) {
     await fsp.rm(tempOut, { force: true }).catch(() => { });
     console.error('[backup] error:', e && e.stack || e);
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+app.post('/upload-r2', async (req, res) => {
+  const cfg = getConfig();
+  const name = (req.query.name || req.body?.name || '').toString();
+  const safeName = path.basename(name);
+
+  try {
+    if (!safeName) return res.status(400).json({ ok: false, error: 'name required' });
+    if (!hasR2Config(cfg)) return res.status(400).json({ ok: false, error: 'R2 not configured' });
+
+    const localFile = path.join(cfg.backupDir, safeName);
+    if (!await fileExists(localFile)) {
+      return res.status(404).json({ ok: false, error: 'local backup not found' });
+    }
+
+    console.log(`[upload-r2] start name=${safeName}`);
+    const result = await uploadBackupToR2WithRetry(cfg, localFile, safeName, 3);
+    await pruneLocalBackups(cfg.backupDir, '');
+    console.log(`[upload-r2] success name=${safeName} attempts=${result.attempts}`);
+    res.json({ ok: true, attempts: result.attempts });
+  } catch (e) {
+    console.error('[upload-r2] error:', e && e.stack || e);
     res.status(500).json({ ok: false, error: e.message });
   }
 });
